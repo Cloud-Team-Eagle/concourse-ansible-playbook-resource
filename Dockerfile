@@ -10,6 +10,10 @@ RUN set -eux; \
       openssl-dev \
       musl-dev \
       cargo; \
+    apk --update add alpine-sdk python3-dev libxml2-dev libxslt-dev; \
+    /usr/bin/python3 -m pip install --upgrade pip; \
+    pip install wheel; \
+    pip install lxml netapp-lib; \
     pip3 install --upgrade pip cffi; \
     pip3 install ansible boto pywinrm; \
     apk del build-dependencies; \
