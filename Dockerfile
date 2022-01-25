@@ -29,6 +29,12 @@ RUN set -eux; \
 
 COPY assets/ /opt/resource/
 
+RUN echo "---"             >> requirements.yml \
+ && echo "collections:"    >> requirements.yml \
+ && echo "- netapp.ontap"  >> requirements.yml \
+ && cat requirements.yml \
+ && ansible-galaxy install -r requirements.yml
+
 FROM main as testing
 
 RUN set -eux; \
