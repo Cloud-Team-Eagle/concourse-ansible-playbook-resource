@@ -15,7 +15,7 @@ RUN set -eux; \
     pip install wheel; \
     pip install lxml netapp-lib; \
     pip3 install --upgrade pip cffi; \
-    pip3 install ansible boto pywinrm; \
+    pip3 install ansible boto pywinrm PyVmomi; \
     apk del build-dependencies; \
     rm -rf /var/cache/apk/*; \
 # Remove PIP and Cargo cache
@@ -29,9 +29,10 @@ RUN set -eux; \
 
 COPY assets/ /opt/resource/
 
-RUN echo "---"             >> requirements.yml \
- && echo "collections:"    >> requirements.yml \
- && echo "- netapp.ontap"  >> requirements.yml \
+RUN echo "---"                 >> requirements.yml \
+ && echo "collections:"        >> requirements.yml \
+ && echo "- netapp.ontap"      >> requirements.yml \
+ && echo "- community.vmware"  >> requirements.yml \
  && cat requirements.yml \
  && ansible-galaxy install -r requirements.yml
 

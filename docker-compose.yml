@@ -1,0 +1,8 @@
+version: "3.1"
+
+services:
+  ansible:
+    image: advantest/concourse-ansible-playbook-resource
+    build: .
+
+
