@@ -36,6 +36,11 @@ RUN echo "---"                 >> requirements.yml \
  && cat requirements.yml \
  && ansible-galaxy install -r requirements.yml
 
+
+RUN mkdir -p /users \
+ && addgroup ansible \
+ && adduser -u 1015 -h /users/ansible -D -G ansible ansible
+
 FROM main as testing
 
 RUN set -eux; \
