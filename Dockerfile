@@ -1,31 +1,28 @@
 FROM alpine:latest as main
 
-RUN set -eux; \
-    apk --update add bash openssh-client ruby git ruby-json python3 py3-pip openssl ca-certificates; \
-    apk --update add --virtual \
+RUN set -eux \
+ && apk --update add bash openssh-client ruby git ruby-json python3 py3-pip openssl ca-certificates \
+ && apk --update add --virtual \
       build-dependencies \
       build-base \
       python3-dev \
       libffi-dev \
       openssl-dev \
       musl-dev \
-      cargo; \
-    apk --update add alpine-sdk python3-dev libxml2-dev libxslt-dev; \
-    /usr/bin/python3 -m pip install --upgrade pip; \
-    pip install wheel; \
-    pip install lxml netapp-lib; \
-    pip3 install --upgrade pip cffi; \
-    pip3 install ansible boto pywinrm PyVmomi jmespath paramiko; \
-    apk del build-dependencies; \
-    rm -rf /var/cache/apk/*; \
-# Remove PIP and Cargo cache
-	rm -rf /root/.cargo /root/.cache; \
-# Remove Python cache files
-	find /usr/lib/ -name '__pycache__' -print0 | xargs -0 -n1 rm -rf; \
-	find /usr/lib/ -name '*.pyc' -print0 | xargs -0 -n1 rm -rf; \
-# Add hosts for convenience
-    mkdir -p /etc/ansible; \
-    echo -e "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
+      cargo \
+ && apk --update add alpine-sdk python3-dev libxml2-dev libxslt-dev \
+ && /usr/bin/python3 -m pip install --upgrade pip \
+ && pip install wheel \
+ && pip install lxml netapp-lib \
+ && pip3 install --upgrade pip cffi \
+ && pip3 install ansible boto pywinrm PyVmomi \
+ && apk del build-dependencies \
+ && rm -rf /var/cache/apk/* \
+ && rm -rf /root/.cargo /root/.cache \
+ && find /usr/lib/ -name '__pycache__' -print0 | xargs -0 -n1 rm -rf \
+ && find /usr/lib/ -name '*.pyc' -print0 | xargs -0 -n1 rm -rf \
+ && mkdir -p /etc/ansible \
+ && echo -e "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
 
 COPY assets/ /opt/resource/
 
