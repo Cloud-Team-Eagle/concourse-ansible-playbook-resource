@@ -15,7 +15,7 @@ RUN set -eux \
  && pip install wheel \
  && pip install lxml netapp-lib \
  && pip3 install --upgrade pip cffi \
- && pip3 install ansible boto pywinrm PyVmomi \
+ && pip3 install ansible boto pywinrm PyVmomi jmespath \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* \
  && rm -rf /root/.cargo /root/.cache \
