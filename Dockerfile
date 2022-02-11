@@ -15,7 +15,7 @@ RUN set -eux \
  && pip install wheel \
  && pip install lxml netapp-lib \
  && pip3 install --upgrade pip cffi \
- && pip3 install ansible boto pywinrm PyVmomi jmespath \
+ && pip3 install ansible boto pywinrm PyVmomi jmespath aiohttp \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* \
  && rm -rf /root/.cargo /root/.cache \
@@ -26,10 +26,11 @@ RUN set -eux \
 
 COPY assets/ /opt/resource/
 
-RUN echo "---"                 >> requirements.yml \
- && echo "collections:"        >> requirements.yml \
- && echo "- netapp.ontap"      >> requirements.yml \
- && echo "- community.vmware"  >> requirements.yml \
+RUN echo "---"                   >> requirements.yml \
+ && echo "collections:"          >> requirements.yml \
+ && echo "- netapp.ontap"        >> requirements.yml \
+ && echo "- community.vmware"    >> requirements.yml \
+ && echo "- vmware.vmware_rest"  >> requirements.yml \
  && cat requirements.yml \
  && ansible-galaxy install -r requirements.yml
 
