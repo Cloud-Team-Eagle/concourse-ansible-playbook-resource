@@ -1,4 +1,4 @@
-FROM alpine:latest as main
+FROM alpine:3.13 as main
 
 RUN set -eux \
  && apk --update add bash openssh-client ruby git ruby-json python3 py3-pip openssl ca-certificates \
