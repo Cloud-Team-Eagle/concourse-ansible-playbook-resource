@@ -24,7 +24,7 @@ RUN set -eux \
  && mkdir -p /etc/ansible \
  && echo -e "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
 
-COPY assets/ /opt/resource/
+COPY --chmod=755 assets/ /opt/resource/
 
 RUN echo "---"                   >> requirements.yml \
  && echo "collections:"          >> requirements.yml \
