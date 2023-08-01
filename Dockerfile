@@ -1,7 +1,7 @@
 FROM alpine:3.13 as main
 
 RUN set -eux \
- && apk --update add bash openssh-client ruby git ruby-json python3 py3-pip openssl ca-certificates \
+ && apk --update add bash openssh-client sshpass ruby git ruby-json python3 py3-pip openssl ca-certificates \
  && apk --update add --virtual \
       build-dependencies \
       build-base \
