@@ -1,0 +1,25 @@
+---
+resources:
+- name: repo-concourse-ansible-playbook-resource
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/Cloud-Team-Eagle/concourse-ansible-playbook-resource
+    branch: main
+- name: build-and-upload-image
+  type: docker-image
+  icon: docker
+  source:
+    repository: advantest/concourse-ansible-playbook-resource
+    username: ((docker.user))
+    password: ((docker.password))
+
+jobs:
+- name: build-image-push-image
+  plan:
+    - get: repo-concourse-ansible-playbook-resource
+      trigger: true
+    - put: build-and-upload-image
+      params:
+        build: repo-concourse-ansible-playbook-resource
+        docker_buildkit: 1
